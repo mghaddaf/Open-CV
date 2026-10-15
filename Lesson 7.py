@@ -1,9 +1,12 @@
 import cv2
 import numpy as mp
 import os
+haarfile = "Open CV\\haarcascade_frontalface_default.xml"
 Data_Sets = r"Open CV\Data Sets"
 Person = "Ryan"
-facecascade = cv2.Cascadeclassifier(r"Open CV\haarcascade_frontalface_default.xml")
+print(cv2.__version__)
+facecascade = cv2.CascadeClassifier(haarfile)
+print(hasattr(cv2, 'CascadeClassifier'))
 path = os.path.join(Data_Sets, Person)
 if not os.path.isdir(path):
     os.mkdir(path)
@@ -21,7 +24,8 @@ while count <= 30:
         face = Greyscaled[y:y+h, x:x+w]
         face_resize = cv2.resize(face, (130, 100))
         cv2.imwrite("%s/%s.png"%(path, count), face_resize)
-    cv2.imshow("Image", Greyscaled)
-    cv2.waitKey(0)
     count = count + 1
-
+    cv2.imshow("Image", Greyscaled)
+    key = cv2.waitKey(10)
+    if key == 27:
+        break
